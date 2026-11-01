@@ -30,9 +30,10 @@ Before every change, the phone's ringtone list is backed up to `~/Library/Applic
 Needs `yt-dlp` and `ffmpeg` (`brew install yt-dlp ffmpeg`) and [uv](https://docs.astral.sh/uv/).
 
 ```
-uv tool install --editable .     # puts `iring` on your PATH
-uv run pytest                    # tests
-uv run ruff check . && uv run ruff format .   # lint + format
+make install     # puts `iring` on your PATH
+make check       # lint + tests (what CI runs, plus tests)
+make format      # auto-fix lint issues and format
+make help        # all targets
 ```
 
 The iPhone must be unlocked and have trusted this Mac at least once.
