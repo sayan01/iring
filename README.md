@@ -36,6 +36,60 @@ converting it to Apple's `.m4r` format, then plugging in your phone and dragging
 
 It can also **list** and **delete** your custom ringtones, which the iPhone itself can't do.
 
+## ⚡ Fast and small
+
+<div align="center">
+
+| ⏱️ Link → ringtone on phone | 📱 Copy to iPhone | ✂️ Trim + encode | 📦 iring itself |
+|:---:|:---:|:---:|:---:|
+| **~9 s** | **~0.1 s** | **~0.35 s** | **23 KB** |
+
+</div>
+
+Nearly all of that time is YouTube download. Once the audio is on your Mac, iring trims it, encodes it,
+and has it on the phone in **under half a second**.
+
+```mermaid
+xychart-beta horizontal
+    title "Time per step, seconds (median of 5 runs)"
+    x-axis ["Download", "Trim + encode", "Copy to iPhone"]
+    y-axis "seconds" 0 --> 8
+    bar [7.71, 0.35, 0.10]
+```
+
+| | The usual way | iring |
+|---|---|---|
+| Apps involved | Downloader, audio editor (GarageBand), Finder | 1 command |
+| Format conversion | Export, rename to `.m4r` by hand | Automatic |
+| Getting it on the phone | Plug in, open Finder, drag onto the device | Automatic, over USB |
+| Removing a ringtone later | Not possible on the iPhone | `iring --delete` |
+| Duplicates when you re-add | Yes | Replaced in place |
+
+<details>
+<summary>📊 Full numbers and how they were measured</summary>
+
+| Step | Median | Range |
+|---|---:|---:|
+| Download audio (yt-dlp) | 7.71 s | 6.92 – 7.99 s |
+| Trim, fade and encode 30 s to AAC 256k (ffmpeg) | 0.35 s | 0.35 – 0.40 s |
+| Copy to iPhone and update its ringtone list | 103 ms | 97 – 106 ms |
+| Delete a ringtone | 53 ms | — |
+| **Whole `iring "<url>"` command** | **8.83 s** | 8.54 – 8.95 s |
+| `iring --list` (whole command) | 0.27 s | 0.27 – 0.28 s |
+
+| Size | |
+|---|---:|
+| iring package (wheel, 447 lines of Python) | 23 KB |
+| Installed, with all Python dependencies | 139 MB |
+| A 30-second ringtone (`.m4r`) | 957 KB |
+| yt-dlp + FFmpeg (Homebrew, shared with other tools) | 37 MB + 52 MB |
+
+MacBook Air (Apple M4, 16 GB), iPhone 16 on iOS 27.0.1 over USB, home Wi-Fi, yt-dlp 2026.10.26, FFmpeg 9.0.2.
+Clip: 0:45–1:15 of the demo video above. Steps were timed with `time.perf_counter()` around iring's own functions;
+whole commands with `/usr/bin/time`. Download time depends mostly on your connection and on YouTube.
+
+</details>
+
 ## 🚀 Quick start
 
 ```sh
