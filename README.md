@@ -32,6 +32,7 @@ Needs `yt-dlp` and `ffmpeg` (`brew install yt-dlp ffmpeg`) and [uv](https://docs
 ```
 uv tool install --editable .     # puts `iring` on your PATH
 uv run pytest                    # tests
+uv run ruff check . && uv run ruff format .   # lint + format
 ```
 
 The iPhone must be unlocked and have trusted this Mac at least once.

@@ -29,10 +29,19 @@ def download(url: str, workdir: Path) -> tuple[Path, str]:
     """Download the best audio stream of a single video. Returns (file, title)."""
     out = _run(
         [
-            "yt-dlp", "--no-playlist", "--quiet", "--no-warnings",
-            "-f", "bestaudio",
-            "--no-simulate", "--print", "title", "--print", "after_move:filepath",
-            "-o", str(workdir / "source.%(ext)s"),
+            "yt-dlp",
+            "--no-playlist",
+            "--quiet",
+            "--no-warnings",
+            "-f",
+            "bestaudio",
+            "--no-simulate",
+            "--print",
+            "title",
+            "--print",
+            "after_move:filepath",
+            "-o",
+            str(workdir / "source.%(ext)s"),
             url,
         ],
         "download",
@@ -53,13 +62,32 @@ def duration_ms(path: Path) -> int:
 
 def make_ringtone(source: Path, dest: Path, start: float, duration: float) -> int:
     """Encode the clip as an AAC .m4r with a short fade-out. Returns its length in ms."""
-    fade = ["-af", f"afade=t=out:st={duration - FADE_SECONDS:g}:d={FADE_SECONDS}"] if duration > 2 * FADE_SECONDS else []
+    fade = (
+        ["-af", f"afade=t=out:st={duration - FADE_SECONDS:g}:d={FADE_SECONDS}"] if duration > 2 * FADE_SECONDS else []
+    )
     _run(
         [
-            "ffmpeg", "-v", "error", "-y",
-            "-ss", f"{start:g}", "-i", str(source), "-t", f"{duration:g}",
-            *fade, "-vn", "-ar", "44100", "-c:a", "aac", "-b:a", "256k",
-            "-f", "ipod", str(dest),
+            "ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-ss",
+            f"{start:g}",
+            "-i",
+            str(source),
+            "-t",
+            f"{duration:g}",
+            *fade,
+            "-vn",
+            "-ar",
+            "44100",
+            "-c:a",
+            "aac",
+            "-b:a",
+            "256k",
+            "-f",
+            "ipod",
+            str(dest),
         ],
         "encoding",
     )

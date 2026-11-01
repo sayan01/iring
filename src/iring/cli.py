@@ -29,7 +29,7 @@ app = typer.Typer(
 
 
 def safe_filename(name: str) -> str:
-    return "".join("_" if c in '/:\\' else c for c in name).strip() or "ringtone"
+    return "".join("_" if c in "/:\\" else c for c in name).strip() or "ringtone"
 
 
 def make(url: str, start: str | None, end: str | None, name: str | None, out: Path) -> tuple[Path, str, int]:
@@ -97,14 +97,27 @@ def delete(query: str, yes: bool) -> None:
 
 @app.command()
 def iring(
-    source: Annotated[str | None, typer.Argument(help="YouTube URL, or a .m4r file to push", show_default=False)] = None,
-    start: Annotated[str | None, typer.Option("--start", "-s", help="Where the clip starts", show_default="0:00")] = None,
-    end: Annotated[str | None, typer.Option("--end", "-e", help="Where the clip ends", show_default="start + 30s")] = None,
-    name: Annotated[str | None, typer.Option("--name", "-n", help="Name shown in Settings", show_default="video title")] = None,
+    source: Annotated[
+        str | None, typer.Argument(help="YouTube URL, or a .m4r file to push", show_default=False)
+    ] = None,
+    start: Annotated[
+        str | None, typer.Option("--start", "-s", help="Where the clip starts", show_default="0:00")
+    ] = None,
+    end: Annotated[
+        str | None, typer.Option("--end", "-e", help="Where the clip ends", show_default="start + 30s")
+    ] = None,
+    name: Annotated[
+        str | None, typer.Option("--name", "-n", help="Name shown in Settings", show_default="video title")
+    ] = None,
     out: Annotated[Path, typer.Option("--out", "-o", help="Where to keep .m4r files")] = DEFAULT_OUT,
     no_push: Annotated[bool, typer.Option("--no-push", help="Only make the .m4r, don't copy it to the phone")] = False,
     list_: Annotated[bool, typer.Option("--list", "-l", help="List custom ringtones on the iPhone")] = False,
-    delete_: Annotated[str | None, typer.Option("--delete", "-d", help="Delete ringtones whose name matches (case-insensitive)", show_default=False)] = None,
+    delete_: Annotated[
+        str | None,
+        typer.Option(
+            "--delete", "-d", help="Delete ringtones whose name matches (case-insensitive)", show_default=False
+        ),
+    ] = None,
     yes: Annotated[bool, typer.Option("--yes", "-y", help="Don't ask before deleting")] = False,
 ) -> None:
     """Make an iPhone ringtone from a YouTube video and put it on the connected iPhone."""
@@ -130,7 +143,7 @@ def iring(
             push(m4r, name, total_ms)
     except (ClipError, AudioError, PhoneError, NoPhoneError) as e:
         err.print(f"[red]error:[/] {e}")
-        raise typer.Exit(1)
+        raise typer.Exit(1) from None
 
 
 def main() -> None:
