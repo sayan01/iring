@@ -61,11 +61,14 @@ The library is **async** (v11+); older sync examples online are stale. Verify si
 The `pymobiledevice3-device-operator` skill is installed; read its `references/python-scripting.md` first.
 
 ```python
-lockdown = await create_using_usbmux()           # raises NoDeviceConnectedError / ConnectionFailedToUsbmuxdError / PairingError
+lockdown = await create_using_usbmux()  # raises NoDeviceConnectedError / ConnectionFailedToUsbmuxdError / PairingError
 async with lockdown, AfcService(lockdown) as afc:
-    await afc.exists(p); await afc.get_file_contents(p); await afc.set_file_contents(p, data)
+    await afc.exists(p)
+    await afc.get_file_contents(p)
+    await afc.set_file_contents(p, data)
     await afc.listdir(dir)  # bare names, no . or ..
-    await afc.rm(p); await afc.makedirs(p)
+    await afc.rm(p)
+    await afc.makedirs(p)
     lockdown.short_info["DeviceName"]
 ```
 
@@ -105,6 +108,7 @@ make gifs      # re-record README GIFs (pushes, then deletes, a "My Heart" tone 
 - **Rich markup eats square brackets** in help text: `"[default: x]"` vanishes. Use Typer's `show_default="x"` instead.
 - Rich auto-highlights numbers and words like `ringtone(s)`; pass `highlight=False` for plain messages.
 - **`sed` on this Mac is GNU sed** (coreutils aliases such as gsed, gls). `sed -i ''` breaks; use `sed -i`, or better, the Edit tool.
+- **Ruff formats Python code blocks inside Markdown** (`.md` files are included in `make lint`). Write snippets one statement per line, or run `uv run ruff format <file>.md`.
 
 ## Repo conventions
 
