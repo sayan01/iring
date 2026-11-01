@@ -85,14 +85,15 @@ def delete(query: str, yes: bool) -> None:
     if not matches:
         raise PhoneError(f"no custom ringtone on {device} matches {query!r} (see iring --list)")
 
+    count = f"{len(matches)} ringtone{'s' if len(matches) > 1 else ''}"
     for name in matches.values():
-        console.print(f"  • {name}")
-    if not yes and not typer.confirm(f"Delete {len(matches)} ringtone(s) from {device}?"):
+        console.print(f"  • {name}", highlight=False)
+    if not yes and not typer.confirm(f"Delete {count} from {device}?"):
         raise typer.Abort()
 
     with console.status("Deleting"):
         asyncio.run(delete_ringtones(list(matches), BACKUP_DIR))
-    console.print(f"[green]✓[/] Deleted {len(matches)} ringtone(s) from {device}.")
+    console.print(f"[green]✓[/] Deleted {count} from {device}.", highlight=False)
 
 
 @app.command()

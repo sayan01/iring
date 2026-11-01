@@ -1,4 +1,4 @@
-.PHONY: help sync test lint format check install clean
+.PHONY: help sync test lint format check install gifs clean
 
 help: ## Show this help
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "} {printf "  %-10s %s\n", $$1, $$2}'
@@ -21,6 +21,9 @@ check: lint test ## Lint and test, run before committing
 
 install: ## Install the `iring` command on your PATH (editable)
 	uv tool install --editable --reinstall .
+
+gifs: ## Re-record the README GIFs (needs vhs and a connected iPhone)
+	cd docs && vhs demo.tape && vhs delete.tape
 
 clean: ## Remove caches
 	rm -rf .pytest_cache .ruff_cache
