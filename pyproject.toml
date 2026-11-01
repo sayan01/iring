@@ -3,6 +3,8 @@ name = "iring"
 version = "0.1.0"
 description = "Download, Trim, and Install Iphone Ringtones from Youtube"
 readme = "README.md"
+license = "GPL-3.0-or-later"
+license-files = ["LICENSE"]
 authors = [
     { name = "Sayan Ghosh", email = "sgic2001@gmail.com" }
 ]

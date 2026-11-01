@@ -12,6 +12,7 @@ No iTunes. No GarageBand. No dragging files around in Finder.
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![macOS](https://img.shields.io/badge/macOS-000000?logo=apple&logoColor=white)](#requirements)
 [![iOS](https://img.shields.io/badge/iOS-tested%20on%2027-000000?logo=ios&logoColor=white)](#how-it-works)
+[![License: GPL v3+](https://img.shields.io/badge/license-GPL--3.0--or--later-blue)](LICENSE)
 
 <img src="docs/demo.gif" alt="iring turning a YouTube link into a ringtone on an iPhone" width="820">
 
@@ -127,3 +128,10 @@ make help        # list everything
 Only make ringtones from audio you have the right to use, such as royalty-free music like
 [NCS](https://ncs.io) or your own uploads. iring uses Apple's file-transfer interface, which isn't an
 officially supported way to install ringtones. Your existing ringtones are backed up before every change.
+
+## 📄 License
+
+iring is free software, licensed under the [GNU General Public License v3.0 or later](LICENSE).
+You can use, change and share it; if you distribute a modified version, it must stay under the GPL too.
+It builds on pymobiledevice3 (also GPL-3.0), Typer and Rich (MIT), and runs yt-dlp and FFmpeg.
+See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for details.
